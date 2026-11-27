@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Security: only allow resources from this site + Google Fonts. Blocks injected scripts (XSS). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Equal Minds Initiative (EMI)</title>
   <meta name="description" content="Equal Minds Initiative helps underprivileged students learn through free tutoring, school supplies, and mentorship." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="logo.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -15,7 +21,7 @@
   <header class="site-header">
     <div class="container nav">
       <a href="#home" class="logo">
-        <span class="logo-mark">EMI</span>
+        <img src="logo.png" alt="Equal Minds Initiative logo" class="logo-img" />
         <span class="logo-text">Equal Minds Initiative</span>
       </a>
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
@@ -36,8 +42,9 @@
     <!-- ===== Hero ===== -->
     <section id="home" class="hero">
       <div class="container hero-inner">
-        <p class="eyebrow">Education for every mind</p>
-        <h1>I'm gay and black.<br />are you?</h1>
+        <div class="hero-text">
+        <p class="eyebrow">Equal Minds Initiative</p>
+        <h1>You aren't behind.<br />You're just thinking differently.</h1>
         <p class="lead">
           Equal Minds Initiative helps underprivileged students learn and thrive through
           free tutoring, school supplies, and caring mentorship.
@@ -45,6 +52,10 @@
         <div class="hero-actions">
           <a href="#involved" class="btn">Volunteer With Us</a>
           <a href="#donate" class="btn btn-outline">Support a Student</a>
+        </div>
+        </div>
+        <div class="hero-logo">
+          <img src="logo.png" alt="Equal Minds Initiative (EMI) logo" />
         </div>
       </div>
     </section>
@@ -155,7 +166,7 @@
             <button class="amount" data-amount="50">$50</button>
             <button class="amount" data-amount="100">$100</button>
           </div>
-          <input type="number" id="customAmount" min="1" placeholder="Other amount ($)" />
+          <input type="number" id="customAmount" min="1" max="10000" step="1" inputmode="numeric" placeholder="Other amount ($)" aria-label="Other donation amount in dollars" />
           <button class="btn btn-full" id="donateBtn">Donate $25</button>
           <p class="fine-print">Connect this button to your payment provider (PayPal, Stripe, Givebutter, etc.).</p>
         </div>
@@ -167,13 +178,13 @@
       <div class="container narrow">
         <p class="eyebrow center">Contact</p>
         <h2 class="center">Let's talk.</h2>
-        <form id="contactForm" class="form" novalidate>
+        <form id="contactForm" class="form" novalidate autocomplete="on">
           <div class="form-row">
             <label>Name
-              <input type="text" name="name" required />
+              <input type="text" name="name" required maxlength="100" autocomplete="name" />
             </label>
             <label>Email
-              <input type="email" name="email" required />
+              <input type="email" name="email" required maxlength="254" autocomplete="email" />
             </label>
           </div>
           <label>I'm interested in
@@ -186,9 +197,14 @@
             </select>
           </label>
           <label>Message
-            <textarea name="message" rows="5" required></textarea>
+            <textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea>
           </label>
+          <!-- Spam trap: hidden from people, bots fill it in. Leave empty. -->
+          <div class="hp-field" aria-hidden="true">
+            <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
           <button type="submit" class="btn btn-full">Send Message</button>
+          <p class="fine-print">We only use your info to reply to you. We never sell or share it.</p>
           <p class="form-status" id="formStatus" role="status"></p>
         </form>
       </div>
@@ -199,13 +215,13 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <span class="logo-mark">EMI</span>
+        <img src="logo.png" alt="EMI logo" class="footer-logo" />
         <p>Equal Minds Initiative — helping every student learn, grow, and succeed.</p>
       </div>
       <p class="copyright">© <span id="year"></span> Equal Minds Initiative. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
