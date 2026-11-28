@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Security: only allow resources from this site + Google Fonts. Blocks injected scripts (XSS). -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Equal Minds Initiative (EMI)</title>
   <meta name="description" content="Equal Minds Initiative helps underprivileged students learn through free tutoring, school supplies, and mentorship." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -171,7 +170,10 @@
       <div class="container narrow">
         <p class="eyebrow center">Contact</p>
         <h2 class="center">Let's talk.</h2>
-        <form id="contactForm" class="form" novalidate autocomplete="on">
+   <form id="contactForm" class="form"
+      action="https://formspree.io/f/YOUR_FORM_ID"
+      method="POST"
+      novalidate autocomplete="on">
           <div class="form-row">
             <label>Name
               <input type="text" name="name" required maxlength="100" autocomplete="name" />
