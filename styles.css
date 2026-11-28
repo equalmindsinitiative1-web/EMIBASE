@@ -243,3 +243,82 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
     grid-template-columns: 1fr;
   }
 }
+/* ===== EMI Website Animations ===== */
+
+/* Smooth appearance when website loads */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text {
+  animation: fadeIn 1s ease forwards;
+}
+
+.hero-logo {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+/* Floating logo */
+@keyframes floatLogo {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.hero-logo img {
+  animation: floatLogo 4s ease-in-out infinite;
+}
+
+/* Smooth hover on buttons */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(26,111,224,0.25);
+}
+
+/* Hover effects on cards */
+.card {
+  transition: all 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(11,58,138,0.15);
+}
+
+/* Smooth navigation */
+.nav-links a {
+  transition: color 0.25s ease;
+}
+
+/* Animated social media cards */
+.social-card {
+  transition: all 0.3s ease;
+}
+
+.social-card:hover {
+  transform: translateY(-7px) scale(1.02);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
