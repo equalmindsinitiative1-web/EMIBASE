@@ -141,8 +141,34 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--t
 .copyright { font-size: .9rem; }
 
 /* Scroll reveal */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.visible { opacity: 1; transform: none; }
+/* ===== Smooth Scroll Animations ===== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(55px);
+  transition:
+    opacity 0.85s ease,
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger the cards */
+.cards > :nth-child(1) { transition-delay: 0.05s; }
+.cards > :nth-child(2) { transition-delay: 0.15s; }
+.cards > :nth-child(3) { transition-delay: 0.25s; }
+.cards > :nth-child(4) { transition-delay: 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 
 /* Responsive */
 @media (max-width: 900px) {
