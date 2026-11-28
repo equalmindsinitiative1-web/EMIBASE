@@ -42,23 +42,32 @@
   );
 
   // ----- Scroll reveal animation -----
-  const revealEls = document.querySelectorAll(".card, .two-col, .stat, .donate-box, .form");
-  if ("IntersectionObserver" in window) {
-    revealEls.forEach((el) => el.classList.add("reveal"));
-    const revealObserver = new IntersectionObserver(
+ // ----- Scroll reveal animation -----
+const revealEls = document.querySelectorAll(
+  "main .section .container > *, .cards > *, .stats > *"
+);
+
+if ("IntersectionObserver" in window) {
+  revealEls.forEach((el, index) => {
+    el.classList.add("reveal");
+
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            revealObserver.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
-    revealEls.forEach((el) => revealObserver.observe(el));
-  }
 
+    observer.observe(el);
+  });
+} else {
+  revealEls.forEach((el) => el.classList.add("visible"));
+}
   // ----- Animated impact counters -----
   function animateCount(el) {
     const target = Number.parseInt(el.dataset.target, 10);
