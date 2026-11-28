@@ -178,7 +178,7 @@
     statusEl.className = `form-status ${type}`;
   }
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     // Spam trap: real people never see this field, bots fill it in.
@@ -213,12 +213,35 @@
       return;
     }
 
-    lastSubmit = now;
+   lastSubmit = now;
 
-    // TODO: send `data` to a trusted HTTPS form service (Formspree, Netlify Forms, Google Forms, etc.).
-    // If you add one, also add its domain to connect-src / form-action in the Content-Security-Policy in index.html.
-    const firstName = data.name.split(/\s+/)[0];
-    showStatus(`Thanks, ${firstName}! We'll be in touch soon.`, "success");
-    form.reset();
+try {
+  const response = await fetch("https://formspree.io/f/xjywdgay", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error("Submission failed");
+  }
+
+  const firstName = data.name.split(/\s+/)[0];
+
+  showStatus(
+    `Thanks, ${firstName}! We'll be in touch soon.`,
+    "success"
+  );
+
+  form.reset();
+
+} catch (error) {
+  showStatus(
+    "Unable to send your message. Please try again.",
+    "error"
+  );
   });
 })();
